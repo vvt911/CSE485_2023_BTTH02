@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2023 at 04:20 AM
+-- Generation Time: Mar 01, 2023 at 04:39 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -20,25 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `btth02_cse485`
 --
-
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DSBaiViet` (IN `ten_tloai` VARCHAR(50))   BEGIN
-    -- Kiểm tra xem thể loại có tồn tại không
-    IF NOT EXISTS(SELECT 1 FROM theloai tl WHERE tl.ten_tloai = ten_tloai) THEN
-        SELECT 'Không tìm thấy thể loại' AS message;
-    END IF;
-    
-    -- Nếu tồn tại thì truy vấn danh sách bài viết của thể loại đó
-    SELECT bv.*, tl.ten_tloai
-    FROM baiviet bv
-    JOIN theloai tl ON bv.ma_tloai = tl.ma_tloai
-    WHERE tl.ten_tloai = ten_tloai;
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -81,25 +62,25 @@ INSERT INTO `article` (`id`, `title`, `song_name`, `category_id`, `summary`, `co
 --
 DELIMITER $$
 CREATE TRIGGER `tg_SuaBaiViet` AFTER UPDATE ON `article` FOR EACH ROW BEGIN
-		UPDATE theloai
-    	SET SLBaiViet = (SELECT COUNT(*) FROM baiviet WHERE ma_tloai = NEW.ma_tloai)
-    	WHERE ma_tloai = NEW.ma_tloai;
+		UPDATE category
+    	SET quantity = (SELECT COUNT(*) FROM article WHERE category_id = NEW.category_id)
+    	WHERE category_id = NEW.category_id;
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `tg_ThemHBaiViet` AFTER INSERT ON `article` FOR EACH ROW BEGIN
-		UPDATE theloai
-    	SET SLBaiViet = (SELECT COUNT(*) FROM baiviet WHERE ma_tloai = NEW.ma_tloai)
-    	WHERE ma_tloai = NEW.ma_tloai;
+		UPDATE category
+    	SET quantity = (SELECT COUNT(*) FROM article WHERE category_id = NEW.category_id)
+    	WHERE category_id = NEW.category_id;
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `tg_XoaBaiViet` AFTER DELETE ON `article` FOR EACH ROW BEGIN
-		UPDATE theloai
-        SET SLBaiViet = (SELECT COUNT(*) FROM baiviet WHERE ma_tloai = OLD.ma_tloai)
-        WHERE ma_tloai = OLD.ma_tloai;
+		UPDATE category
+        SET quantity = (SELECT COUNT(*) FROM article WHERE category_id = OLD.category_id)
+        WHERE category_id = OLD.category_id;
 END
 $$
 DELIMITER ;
@@ -176,24 +157,6 @@ INSERT INTO `user` (`username`, `password`) VALUES
 ('phong', '123'),
 ('hien', '123'),
 ('dungkt', 'abc');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `vw_music`
--- (See below for the actual view)
---
-CREATE TABLE `vw_music` (
-);
-
--- --------------------------------------------------------
-
---
--- Structure for view `vw_music`
---
-DROP TABLE IF EXISTS `vw_music`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_music`  AS SELECT `baiviet`.`ma_bviet` AS `ma_bviet`, `baiviet`.`tieude` AS `tieude`, `baiviet`.`ten_bhat` AS `ten_bhat`, `baiviet`.`ma_tloai` AS `ma_tloai`, `baiviet`.`tomtat` AS `tomtat`, `baiviet`.`noidung` AS `noidung`, `baiviet`.`ma_tgia` AS `ma_tgia`, `baiviet`.`ngayviet` AS `ngayviet`, `baiviet`.`hinhanh` AS `hinhanh`, `theloai`.`ten_tloai` AS `ten_tloai`, `tacgia`.`ten_tgia` AS `ten_tgia` FROM ((`baiviet` join `theloai` on(`baiviet`.`ma_tloai` = `theloai`.`ma_tloai`)) join `tacgia` on(`baiviet`.`ma_tgia` = `tacgia`.`ma_tgia`))  ;
 
 --
 -- Indexes for dumped tables
