@@ -1,19 +1,33 @@
 <?php
-    class User{
-        private $username;
-        private $password;
-        public function __construct($username, $password)
-        {
-            $this->username = $username;
-            $this->password = $password;
-        }
-        public function getUserName(){
-            return $this->username;
-        }
-        public function getPassword(){
-            return $this->password;
-        }
-        
-    
+class User{
+    // Thuộc tính
+
+    private $password;
+    private $username;
+
+
+    public function __construct(
+                                $username = null,
+                                $password = null){
+        $this->password = $password;
+        $this->username = $username;
     }
-?>
+
+    // Setter và Getter
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+}
