@@ -1,4 +1,7 @@
+<?php
+    require '../includes/session_login.php';
 
+?>
 <?php
     session_start();
     if(isset($_SESSION['username'])){
