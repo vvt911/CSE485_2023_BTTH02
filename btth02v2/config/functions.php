@@ -15,9 +15,9 @@ function format_date(string $string): string
 // UTILITY FUNCTIONS
 function redirect(string $location, array $parameters = [], $response_code = 302)
 {
-    $qs = $parameters ? '?' . http_build_query($parameters) : '';      // Create query string
+    $qs = $parameters ? '&' . http_build_query($parameters) : '';      // Create query string
     $location = $location . $qs;                                       // Create new path
-    header('Location: ' . APP_ROOT . $location, true, $response_code); // Redirect to new page
+    header('Location: '. $location, true, $response_code); // Redirect to new page
     exit;                                                              // Stop code
 }
 
