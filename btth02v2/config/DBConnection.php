@@ -6,8 +6,8 @@ class DBConnection
     {
         $type     = 'mysql';                 // Type of database
         $server   = 'localhost';             // Server the database is on
-        $db       = 'demo_';                 // Name of the database
-        $port     = '';                      // Port is usually 8889 in MAMP and 3306 in XAMPP
+        $db       = 'btth02_cse485';                 // Name of the database
+        $port     = '3306';                      // Port is usually 8889 in MAMP and 3306 in XAMPP
         $charset  = 'utf8mb4';               // UTF-8 encoding using 4 bytes of data per character
 
         $username = 'root';                  // Enter YOUR username here
