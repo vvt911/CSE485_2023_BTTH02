@@ -1,14 +1,15 @@
 <?php
-class Author {
+
+class Category {
     private $id;
     private $name;
-    private $image;
+    private $quantity;
 
-    public function __construct($id, $name, $image)
+    public function __construct($id, $name, $quantity)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->image = $image;
+        $this->quantity = $quantity;
     }
 
     public function getId()
@@ -34,14 +35,14 @@ class Author {
         return $this;
     }
 
-    public function getImage()
+    public function getQuantity()
     {
-        return $this->image;
+        return $this->quantity;
     }
 
-    public function setImage($image)
+    public function setQuantity($quantity)
     {
-        $this->image = $image;
+        $this->quantity = $quantity;
 
         return $this;
     }
