@@ -11,7 +11,7 @@ define('MAX_SIZE', '5242880');                                    // Max file si
 
 spl_autoload_register(function($class)                   // Set autoload function
 {
-    $path = APP_ROOT . '/src/classes/';                  // Path to class definitions
+    $path = APP_ROOT . '/controllers/';                  // Path to class definitions
     require $path . $class . '.php';                     // Include class definition
 });
 

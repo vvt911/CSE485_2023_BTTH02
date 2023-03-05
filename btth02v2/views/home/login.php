@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $title = "Login";
 require(APP_ROOT . "/views/layout/header.php");
 ?>
-<?php if ($message != '') {?><div class="alert text-center <?= $invalid ? 'alert-danger' : 'alert-success'?>"><?= $message ?></div><?php } ?>
+<?php if (isset($message)) {?><div class="alert text-center <?= $invalid ? 'alert-danger' : 'alert-success'?>"><?= $message ?></div><?php } ?>
 
 <main class="container mt-5 mb-5">
     <div class="d-flex justify-content-center h-100">
