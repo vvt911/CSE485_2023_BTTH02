@@ -1,15 +1,17 @@
 <?php
-require './config/DBConnection.php';
+require_once("./config/DBConnection.php");
 include("./models/Category.php");
 
 class CategoryService{
-    public function getAllCategory() {
+    private $conn = null;
+    public function __construct()
+    {
         $dbConn = new DBConnection();
-        $conn = $dbConn->getConnection();
-
+        $this->conn = $dbConn->getConnection();
+    }
+    public function getAllCategory() {       
         $sql = "SELECT * FROM category";
-        
-        $stmt = $conn->query($sql);
+        $stmt = $this->conn->query($sql);
         
         $categories = [];
         while ($row = $stmt->fetch()) {
